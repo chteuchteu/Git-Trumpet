@@ -68,11 +68,26 @@ swiftmailer:
     spool:     { type: memory }
 
 hwi_oauth:
-    firewall_names: [secured_area]
+    connect:
+        account_connector: app.custom_user_provider
     resource_owners:
-        github_resource_owner:
+        github:
             type:                github
             client_id:           "%github_client_id%"
             client_secret:       "%github_client_secret%"
+            scope:               "user:email"
             options:
                 csrf: true
+
+    firewall_names: [secured_area]
+
+    fosub:
+        username_iterations: 30
+
+        properties:
+            github: githubId
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
