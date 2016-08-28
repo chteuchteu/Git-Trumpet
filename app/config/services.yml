@@ -10,3 +10,10 @@ services:
     app.custom_user_provider:
         class: AppBundle\Security\Core\User\FOSUBUserProvider
         arguments: ['@fos_user.user_manager', {github: githubId}]
+
+    app.github:
+        class: AppBundle\Service\GitHubService
+        arguments:
+            tokenStorage: "@security.token_storage"
+            githubClientId: "%github_client_id%"
+            githubClientSecret: "%github_client_secret%"

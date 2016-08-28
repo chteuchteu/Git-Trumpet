@@ -1,0 +1,18 @@
+<li class="list-group-item bookmarked"
+    data-owner="{{ repo.owner }}"
+    data-name="{{ repo.name }}"
+    data-url="{{ repo.url }}">
+    <a href="#" class="bookmark">
+        <i class="mdi mdi-bookmark-plus"></i>
+        <i class="mdi mdi-bookmark-check"></i>
+    </a>
+    <div class="infos">
+        <div class="pull-right">
+            <a href="{{ repo.url }}" target="_blank">
+                <i class="mdi mdi-open-in-new"></i>
+            </a>
+        </div>
+
+        <h4>{{ repo.owner }}/<strong>{{ repo.name }}</strong></h4>
+    </div>
+</li>

@@ -1,0 +1,33 @@
+<li class="list-group-item {% if app.user.followsRepo(repo.owner.login, repo.name) %}bookmarked{% endif %}"
+    data-owner="{{ repo.owner.login }}"
+    data-name="{{ repo.name }}"
+    data-url="{{ repo.url }}">
+    <a href="#" class="bookmark">
+        <i class="mdi mdi-bookmark-plus"></i>
+        <i class="mdi mdi-bookmark-check"></i>
+    </a>
+    <div class="infos">
+        <div class="pull-right">
+            {% if repo.language is not null %}
+                <span class="badge">
+                    {{ repo.language }}
+                </span>
+            {% endif %}
+            <span class="badge">
+                <i class="mdi mdi-star"></i>
+                {{ repo.stargazers_count }}
+            </span>
+            <span class="badge">
+                <i class="mdi mdi-source-fork"></i>
+                {{ repo.forks }}
+            </span>
+
+            <a href="{{ repo.url }}" target="_blank">
+                <i class="mdi mdi-open-in-new"></i>
+            </a>
+        </div>
+
+        <h4>{{ repo.owner.login }}/<strong>{{ repo.name }}</strong></h4>
+        <p>{{ repo.description }}</p>
+    </div>
+</li>

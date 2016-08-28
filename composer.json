@@ -27,8 +27,11 @@
         "symfony/polyfill-apcu": "^1.0",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "friendsofsymfony/user-bundle": "dev-master",
         "incenteev/composer-parameter-handler": "^2.0",
-        "hwi/oauth-bundle": "~0.5@dev"
+        "hwi/oauth-bundle": "~0.5@dev",
+        "knplabs/github-api": "^1.7",
+        "php-http/guzzle6-adapter": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

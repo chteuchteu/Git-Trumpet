@@ -13,7 +13,7 @@
 
 body {
     font-family: $font-roboto;
-    background: $color-blue;
+    background: $color-primary;
 
     header, footer {
         color: #fff;
@@ -47,6 +47,10 @@ header {
     .menu {
         border-bottom: 1px solid #eee;
 
+        h2 {
+            margin-top: 5px;
+        }
+
         .logged-in-user {
             padding: 3px;
 
@@ -74,6 +78,103 @@ footer {
 
         &:hover {
             color: rgba(#fff, 0.8);
+        }
+    }
+}
+
+
+.repositories {
+    max-height: 400px;
+    overflow-y: auto;
+
+    li {
+        $bookmark-expanded-width: 60px;
+
+        position: relative;
+
+        .bookmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            overflow: hidden;
+
+            text-align: center;
+            font-size: 29px;
+            line-height: 66px;
+            background-color: $color-primary;
+            color: #fff;
+            box-shadow: inset -1px 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: $dimens-border-radius 0 0 $dimens-border-radius;
+
+            &:hover {
+                background-color: darken($color-primary, 5);
+            }
+
+            .mdi {
+                &.mdi-bookmark-plus { display: block; }
+                &.mdi-bookmark-check { display: none; }
+            }
+        }
+        .infos {
+            width: 100%;
+            margin-left: auto;
+            margin-right: 0;
+
+            h4 {
+                margin-top: 0;
+            }
+            p {
+                font-size: 13px;
+                color: #888;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-bottom: 0;
+            }
+        }
+        .bookmark, .bookmark .i, .infos {
+            @include transition-duration(200ms);
+            @include transition-timing-function($transition-timing-function);
+        }
+
+        &:hover, &.bookmarked {
+            .bookmark {
+                width: $bookmark-expanded-width;
+            }
+
+            .infos {
+                width: calc(100% - #{$bookmark-expanded-width});
+            }
+        }
+
+        &.bookmarked {
+            .bookmark {
+                background: $color-green;
+
+                .mdi-bookmark-plus { display: none; }
+                .mdi-bookmark-check { display: block; }
+
+                &:hover {
+                    background-color: $color-red;
+
+                    .mdi-bookmark-check {
+                        @include material-icon($mdi-close-circle);
+                    }
+                }
+            }
+        }
+    }
+
+    &.repositories-slim li {
+        .bookmark {
+            font-size: 26px;
+            line-height: 43px;
+        }
+
+        .infos h4 {
+            margin-bottom: 0;
         }
     }
 }

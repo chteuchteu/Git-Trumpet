@@ -1,20 +1,58 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
-{% block content %}
-    <h2>Repositories</h2>
+{% block title %}Repositories{% endblock %}
 
+{% block content %}
     <h3>Follow a repository</h3>
     <input type="text" class="form-control" placeholder="Find a repository (by name, user, or user/name)" />
-    <ul class="list-group">
-        <!-- Find repositories -->
+
+    <h4>Your starred repositories</h4>
+
+    <ul class="list-group repositories">
+        {% for repo in starred %}
+            {% include 'AppBundle:Partials:repository_api.html.twig' %}
+        {% endfor %}
     </ul>
 
     <h3>Followed repositories</h3>
-    <ul id="followed-repos" class="list-group">
-        <li class="list-group-item">
-            <div class="empty">
-                <i class="mdi mdi-package-variant"></i> <p>You don't follow any repository</p>
-            </div>
-        </li>
+    <ul id="followed-repos" class="list-group repositories repositories-slim">
+        {% if app.user.followedRepos is empty %}
+            <li class="list-group-item">
+                <div class="empty">
+                    <i class="mdi mdi-package-variant"></i> <p>You don't follow any repository</p>
+                </div>
+            </li>
+        {% else %}
+            {% for repo in app.user.followedRepos %}
+                {% include 'AppBundle:Partials:repository_db.html.twig' %}
+            {% endfor %}
+        {% endif %}
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('.repositories').on('click', '.bookmark', function() {
+                var repo = $(this).parent();
+
+                if (repo.is(':not(.bookmarked)')) {
+                    $.ajax({
+                        url: '{{ url('app_api_followrepository') }}',
+                        method: 'post',
+                        data: {
+                            owner: repo.data('owner'),
+                            name: repo.data('name'),
+                            url: repo.data('url')
+                        }
+                    });
+                }
+                else {
+                    // TODO unbookmark
+                }
+
+                $(this).parent().toggleClass('bookmarked');
+            });
+        });
+    </script>
 {% endblock %}

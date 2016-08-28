@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block head_metas %}{% endblock %}
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} &bullet; Git Trumpet</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -36,18 +36,20 @@
             <div class="content-wrap">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <div class="menu">
-                        <a></a>
+                        <div class="container-fluid">
+                            <div class="logged-in-user pull-right">
+                                <img src="https://github.com/{{ app.user.username }}.png?size=40" />
 
-                        <div class="logged-in-user pull-right">
-                            <img src="https://github.com/{{ app.user.username }}.png?size=40" />
+                                {{ app.user.realname }}
 
-                            {{ app.user.realname }}
+                                <a href="{{ path('fos_user_security_logout') }}">
+                                    <i class="mdi mdi-logout-variant"></i>
+                                </a>
+                            </div>
 
-                            <a href="{{ path('fos_user_security_logout') }}">
-                                <i class="mdi mdi-logout-variant"></i>
-                            </a>
+                            <h2>{{ block('title') }}</h2>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
 
                     <div class="container-fluid">
@@ -77,6 +79,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+<script src="{{ asset('bundles/app/js/script.js') }}"></script>
 {% block javascripts %}{% endblock %}
 </body>
 </html>
