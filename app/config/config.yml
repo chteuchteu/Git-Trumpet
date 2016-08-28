@@ -66,3 +66,13 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+hwi_oauth:
+    firewall_names: [secured_area]
+    resource_owners:
+        github_resource_owner:
+            type:                github
+            client_id:           "%github_client_id%"
+            client_secret:       "%github_client_secret%"
+            options:
+                csrf: true
