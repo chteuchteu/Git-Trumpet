@@ -7,28 +7,30 @@ use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseFOSUBProvider;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class MyFOSUBUserProvider extends BaseFOSUBProvider
+class FOSUBUserProvider extends BaseFOSUBProvider
 {
     /**
      * {@inheritDoc}
      */
-    public function connect(UserInterface $user, UserResponseInterface $response)
+    public function connect(UserInterface $u, UserResponseInterface $response)
     {
-        // get property from provider configuration by provider name
-        // , it will return `github_id` in that case (see service definition below)
-        $property = $this->getProperty($response);
         $username = $response->getUsername(); // get the unique user identifier
 
         //we "disconnect" previously connected users
-        $existingUser = $this->userManager->findUserBy(array($property => $username));
+        /** @var User $existingUser */
+        $existingUser = $this->userManager->findUserBy(['githubId' => $username]);
         if (null !== $existingUser) {
             // set current user id and token to null for disconnect
-            // ...
+            $existingUser->setGithubId(null);
+            $existingUser->setGithubAccessToken(null);
 
             $this->userManager->updateUser($existingUser);
         }
-        // we connect current user, set current user id and token
-        // ...
+
+        /** @var User $user */
+        $user = $u;
+        $user->setGithubId($username);
+        $user->setGithubAccessToken($response->getAccessToken());
         $this->userManager->updateUser($user);
     }
 
@@ -37,23 +39,28 @@ class MyFOSUBUserProvider extends BaseFOSUBProvider
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $userEmail = $response->getEmail();
-        $user = $this->userManager->findUserByEmail($userEmail);
+        $user = $this->userManager->findUserBy(['githubId' => $response->getUsername()]);
 
-        // if null just create new user and set it properties
-        if (null === $user) {
-            $username = $response->getRealName();
-            $user = new User();
-            $user->setUsername($username);
+        if ($user === null) {
+            /** @var User $user */
+            $user = $this->userManager->createUser();
+            $user
+                ->setGithubId($response->getUsername())
+                ->setGithubAccessToken($response->getAccessToken())
+                ->setUsername($response->getNickname())
+                ->setRealName($response->getRealName())
+                ->setEmail($response->getEmail())
+                ->setPassword($response->getUsername()) // Just so it's not null
+                ->setEnabled(true);
 
-            // ... save user to database
-
+            $this->userManager->updateUser($user);
             return $user;
         }
-        // else update access token of existing user
-        $serviceName = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
-        $user->$setter($response->getAccessToken());//update access token
+
+        // User exists
+        /** @var User $user */
+        $user = parent::loadUserByOAuthUserResponse($response);
+        $user->setGithubAccessToken($response->getAccessToken());
 
         return $user;
     }

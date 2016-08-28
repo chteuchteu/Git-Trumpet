@@ -26,6 +26,19 @@ class User extends FOSUBUser
     private $githubId;
 
     /**
+     * @var string
+     * @ORM\Column(name="githubAccessToken", type="string", length=255, nullable=true)
+     */
+    private $githubAccessToken;
+
+    /**
+     * @var string
+     * @ORM\Column(name="realName", type="string", length=255)
+     */
+    private $realName;
+
+
+    /**
      * @return int
      */
     public function getId()
@@ -48,6 +61,42 @@ class User extends FOSUBUser
     public function setGithubId($githubId)
     {
         $this->githubId = $githubId;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGithubAccessToken()
+    {
+        return $this->githubAccessToken;
+    }
+
+    /**
+     * @param mixed $githubAccessToken
+     * @return User
+     */
+    public function setGithubAccessToken($githubAccessToken)
+    {
+        $this->githubAccessToken = $githubAccessToken;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRealName()
+    {
+        return $this->realName;
+    }
+
+    /**
+     * @param string $realName
+     * @return User
+     */
+    public function setRealName($realName)
+    {
+        $this->realName = $realName;
         return $this;
     }
 }
