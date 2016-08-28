@@ -1,0 +1,14 @@
+/**
+ * Git-Trumpet
+ * Overriden Bootstrap components
+ */
+
+// List groups
+.list-group-item:last-child {
+    border-bottom-right-radius: $dimens-border-radius;
+    border-bottom-left-radius: $dimens-border-radius;
+}
+.list-group-item:first-child {
+    border-top-left-radius: $dimens-border-radius;
+    border-top-right-radius: $dimens-border-radius;
+}

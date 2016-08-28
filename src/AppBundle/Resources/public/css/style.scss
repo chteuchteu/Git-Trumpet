@@ -2,3 +2,78 @@
  * Git-Trumpet
  * :trumpet: PRRRFT PRFFT PFRRRT PRFFFT :trumpet:
  */
+
+@import '../../../../../bower_components/bourbon/app/assets/stylesheets/bourbon';
+@import '../../../../../bower_components/materialdesignicons-scss-variables/dist/materialdesignicons';
+@import '../../../../../bower_components/materialdesignicons-scss-variables/dist/materialdesignicons-vars';
+@import '../../../../../bower_components/material-scss-colors/dist/material-colors';
+@import 'vars';
+@import 'override';
+@import 'ui';
+
+body {
+    font-family: $font-roboto;
+    background: $color-blue;
+
+    header, footer {
+        color: #fff;
+    }
+}
+
+.clearfix { clear: both; }
+
+h1, h2, h3 {
+    opacity: 0.9;
+    font-family: $font-roboto-mono;
+}
+.subtitle {
+    color: rgba(#fff, 0.6);
+}
+
+header, footer {
+    text-shadow: 1px 1px 1px rgba(#000, 0.15);
+}
+
+header {
+    padding: 40px 0;
+}
+
+.content-wrap {
+    color: #333;
+    background-color: #fff;
+    border-radius: $dimens-border-radius;
+    box-shadow: 0 2px 17px 0 rgba(0, 0, 0, 0.16), 0 15px 50px 0 rgba(0, 0, 0, 0.12);
+
+    .menu {
+        border-bottom: 1px solid #eee;
+
+        .logged-in-user {
+            padding: 3px;
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+footer {
+    margin-top: 10px;
+    padding: 10px 0;
+
+    p {
+        cursor: default;
+        text-align: center;
+        color: rgba(#fff, 0.6);
+        @include transition-duration(200ms);
+        @include transition-property(color);
+        @include transition-timing-function($transition-timing-function);
+
+        &:hover {
+            color: rgba(#fff, 0.8);
+        }
+    }
+}

@@ -1,5 +1,20 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
 {% block content %}
+    <h2>Repositories</h2>
 
+    <h3>Follow a repository</h3>
+    <input type="text" class="form-control" placeholder="Find a repository (by name, user, or user/name)" />
+    <ul class="list-group">
+        <!-- Find repositories -->
+    </ul>
+
+    <h3>Followed repositories</h3>
+    <ul id="followed-repos" class="list-group">
+        <li class="list-group-item">
+            <div class="empty">
+                <i class="mdi mdi-package-variant"></i> <p>You don't follow any repository</p>
+            </div>
+        </li>
+    </ul>
 {% endblock %}
